@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>[[#{sensor.list.headline}]]</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">[[#{sensor.list.headline}]]</h1>
+                <div>
+                    <a th:href="@{/sensors/add}" class="btn btn-primary ms-2">[[#{sensor.list.createNew}]]</a>
+                </div>
+            </div>
+            <div th:if="${sensors.empty}">[[#{sensor.list.empty}]]</div>
+            <div th:if="${!sensors.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">[[#{sensor.id.label}]]</th>
+                            <th scope="col">[[#{sensor.name.label}]]</th>
+                            <th scope="col">[[#{sensor.type.label}]]</th>
+                            <th scope="col">[[#{sensor.model.label}]]</th>
+                            <th scope="col">[[#{sensor.instalationDate.label}]]</th>
+                            <th scope="col">[[#{sensor.status.label}]]</th>
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="sensor : ${sensors}">
+                            <td>[[${sensor.id}]]</td>
+                            <td>[[${sensor.name}]]</td>
+                            <td>[[${sensor.type}]]</td>
+                            <td>[[${sensor.model}]]</td>
+                            <td>[[${sensor.instalationDate}]]</td>
+                            <td>[[${sensor.status}]]</td>
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/sensors/edit/{id}(id=${sensor.id})}" class="btn btn-sm btn-secondary">[[#{sensor.list.edit}]]</a>
+                                    <form th:action="@{/sensors/delete/{id}(id=${sensor.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button type="submit" class="btn btn-sm btn-secondary">[[#{sensor.list.delete}]]</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>[[#{data.list.headline}]]</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">[[#{data.list.headline}]]</h1>
+                <div>
+                    <a th:href="@{/datas/add}" class="btn btn-primary ms-2">[[#{data.list.createNew}]]</a>
+                </div>
+            </div>
+            <div th:if="${datas.empty}">[[#{data.list.empty}]]</div>
+            <div th:if="${!datas.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">[[#{data.id.label}]]</th>
+                            <th scope="col">[[#{data.temperature.label}]]</th>
+                            <th scope="col">[[#{data.humidity.label}]]</th>
+                            <th scope="col">[[#{data.windSpeed.label}]]</th>
+                            <th scope="col">[[#{data.parameter.label}]]</th>
+                            <th scope="col">[[#{data.sensor.label}]]</th>
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="data : ${datas}">
+                            <td>[[${data.id}]]</td>
+                            <td>[[${data.temperature}]]</td>
+                            <td>[[${data.humidity}]]</td>
+                            <td>[[${data.windSpeed}]]</td>
+                            <td>[[${data.parameter}]]</td>
+                            <td>[[${data.sensor}]]</td>
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/datas/edit/{id}(id=${data.id})}" class="btn btn-sm btn-secondary">[[#{data.list.edit}]]</a>
+                                    <form th:action="@{/datas/delete/{id}(id=${data.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button type="submit" class="btn btn-sm btn-secondary">[[#{data.list.delete}]]</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>[[#{alert.edit.headline}]]</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">[[#{alert.edit.headline}]]</h1>
+                <div>
+                    <a th:href="@{/alerts}" class="btn btn-secondary">[[#{alert.edit.back}]]</a>
+                </div>
+            </div>
+            <div th:replace="~{fragments/forms::globalErrors('alert')}" />
+            <form th:action="${requestUri}" method="post">
+                <div th:replace="~{fragments/forms::inputRow(object='alert', field='id', disabled=true, type='number')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='alert', field='event')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='alert', field='time', inputClass='js-datetimepicker')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='alert', field='sensor', type='select')}" />
+                <input type="submit" th:value="#{alert.edit.headline}" class="btn btn-primary mt-4" />
+            </form>
+        </div>
+    </body>
+</html>
